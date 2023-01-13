@@ -70,34 +70,34 @@ app.post("/user/register", async (req, res) => {
   }
 });
 
-// app.post("/user/login", async (req, res) => {
-//     try {
-//       // Connect the Database
-//       const connection = await mongoclient.connect(URL);
+app.post("/user/login", async (req, res) => {
+    try {
+      // Connect the Database
+      const connection = await mongoclient.connect(URL);
   
-//       // Select the DB
-//       const db = connection.db("B39WDT2");
+      // Select the DB
+      const db = connection.db("B39WDT2");
   
-//       const user = await db
-//         .collection("users")
-//         .findOne({ email: req.body.email });
+      const user = await db
+        .collection("users")
+        .findOne({ email: req.body.email });
   
-//       if (user) {
-//         const compare = await bcrypt.compare(req.body.password, user.password);
-//         if (compare) {
-//           // Issue Token
-//           const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-//             expiresIn: "2m",
-//           });
-//           res.json({ message: "Success", token });
-//         } else {
-//           res.json({ message: "Incorrect Username/Password" });
-//         }
-//       } else {
-//         res.status(404).json({ message: "Incorrect Username/Password" });
-//       }
-//     } catch (error) {}
-//   });
+      if (user) {
+        const compare = await bcrypt.compare(req.body.password, user.password);
+        if (compare) {
+          // Issue Token
+          const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+            expiresIn: "2m",
+          });
+          res.json({ message: "Success", token });
+        } else {
+          res.json({ message: "Incorrect Username/Password" });
+        }
+      } else {
+        res.status(404).json({ message: "Incorrect Username/Password" });
+      }
+    } catch (error) {}
+  });
 
   // Create
 app.post("/ticket", authorize, async (req, res) => {
